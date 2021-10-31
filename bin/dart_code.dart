@@ -5,9 +5,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:web_socket_channel/io.dart';
 
-
 void main(List<String> arguments) {
-
   final channel = IOWebSocketChannel.connect(
       'wss://ws.binaryws.com/websockets/v3?app_id=1089');
 
@@ -15,25 +13,21 @@ void main(List<String> arguments) {
     final decodeList = jsonDecode(activeSymbol);
     final nameSymbol = decodeList['active_symbols'];
 
-
     dynamic symbol;
 
-    for (var i =0;i<78;i++){
+    for (var i = 0; i < 78; i++) {
       symbol = nameSymbol[i]['symbol'];
       print("List of symbol: ${symbol}");
     }
-    
 
     listActive();
     channel.sink.close();
   });
-  
-channel.sink.add('{"active_symbols": "brief"}');
 
+  channel.sink.add('{"active_symbols": "brief"}');
 }
 
-void listActive(){
-
+void listActive() {
   final channel = IOWebSocketChannel.connect(
       'wss://ws.binaryws.com/websockets/v3?app_id=1089');
 
@@ -52,8 +46,7 @@ void listActive(){
     });
     channel.sink.close();
   });
-   print('Please Enter Symbol Name : ');
+  print('Please Enter Symbol Name : ');
   final userInput = stdin.readLineSync();
   channel.sink.add('{"ticks":"$userInput"}');
-
 }
